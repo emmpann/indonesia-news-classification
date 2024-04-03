@@ -3,49 +3,33 @@ import numpy as np
 import pickle
 import string
 import re
-
 #Data Visualization
 import matplotlib.pyplot as plt
-
-#Text Color
-from termcolor import colored
-
 #Train Test Split
 from sklearn.model_selection import train_test_split
-
 from sklearn import preprocessing
-
 #Model Evaluation
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score, f1_score
 from mlxtend.plotting import plot_confusion_matrix
-
 #Deep Learning
-import tensorflow as tf
-from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding, LSTM, Dense, Dropout, GlobalMaxPooling1D, Bidirectional
 from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
-from tensorflow.keras.utils import plot_model
 
-# file_path = "/content/drive/MyDrive/kuliah/nlp/news-classification/detik_news.csv"
 file_path = "detik_news.csv"
 df = pd.read_csv(file_path)
 
 def preprocess(text):
   # convert to lower case
   text = text.lower()
-
   # remove punctuation
   text = text.translate(str.maketrans("","",string.punctuation))
-
   # remove number
   text = re.sub(r"\d+", "", text)
-
   # remove whitespace
   text = re.sub('\s+',' ',text.strip())
-
   # remove single char
   text = re.sub(r"\b[a-zA-Z]\b", "", text)
   return text
